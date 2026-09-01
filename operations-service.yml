@@ -1,0 +1,17 @@
+server:
+  port: 9030
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/razorpay-operations-db
+
+app:
+  webhook:
+    delivery:
+      redis-key: "webhook-retry"
+      poll-batch-size: 100
+      signature-header: "X-Razorpay-Signature"
+      visibility-timeout: PT2M
+    inbox:
+      retention-days: 30
+      cleanup-cron: "0 0 3 * * *"

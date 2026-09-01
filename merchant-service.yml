@@ -18,4 +18,4 @@ app:
     cookie:
       path: /api/v1/auth                  # cookie only sent to auth endpoints (refresh, logout)
       same-site: Strict                   # blocks browser CSRF for cookie-bearing requests
-      secure: ${COOKIE_SECURE:true}       # must be true in prod; override to false only for local http dev
+      secure: ${COOKIE_SECURE:false}      # must be true in prod; override to false only for local http dev
