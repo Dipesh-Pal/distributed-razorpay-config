@@ -1,4 +1,11 @@
 spring:
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
   jpa:
     open-in-view: false
     hibernate:
@@ -9,3 +16,63 @@ spring:
         format_sql: false
         jdbc:
           time_zone: Asia/Kolkata
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: 6379
+      password: ${REDIS_PASSWORD}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 10
+          max-idle: 5
+          min-idle: 1  
+  kafka:
+    bootstrap-servers: ${KAFKA_BROKERS:localhost:9092}
+    listeners:
+      ack-mode: MANUAL
+    producer:
+      acks: all
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        enable.idempotence: true
+        max.in.flight.requests.per.connection: 5
+        retries: 3
+        spring.json.add.type.headers: false
+    consumer:
+        group-id: ${KAFKA_CONSUMER_GROUP_ID:razorpay-clone-group}
+        auto-offset-reset: earliest
+        enable-auto-commit: false
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+        properties:
+            spring.json.trusted.packages: "com.pal.dipesh.razorpay.*"
+            spring.json.use.type.headers: false
+            spring.json.value.default.type: java.util.LinkedHashMap
+  eureka:
+    client:
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+    instance:
+      prefer-ip-address: true
+      hostname: localhost
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+logging:
+  level:
+    org.apache.kafka.clients: WARN
+    org.apache.kafka.common: WARN
+
+app:
+  kafka:
+    topics:
+      payment: payment.events
+      order: order.events
+      refund: refund.events
+      settlement: settlement.events
