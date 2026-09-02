@@ -76,3 +76,8 @@ app:
       order: order.events
       refund: refund.events
       settlement: settlement.events
+  security:
+    cookie:                               # Cookie configs are added in common config to create the CookieProperties bean for CookieUtil -> GlobalExceptionHandler
+      path: /api/v1/auth                  # cookie only sent to auth endpoints (refresh, logout)
+      same-site: Strict                   # blocks browser CSRF for cookie-bearing requests
+      secure: ${COOKIE_SECURE:false}      # must be true in prod; override to false only for local http dev
