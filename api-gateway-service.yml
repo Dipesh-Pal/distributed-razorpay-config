@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+app:
+  security:
+    public-routes:
+      - "api/v1/auth/**"
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: merchant-service
+              uri: lb://merchant-service
+              predicates:
+                - Path=/api/v1/auth/**, /api/v1/merchants/**
+                
+            - id: payment-service
+              uri: lb://payment-service
+              predicates:
+                - Path=/api/v1/payments/**, /api/v1/orders/**
+
+            - id: vault-service
+              uri: lb://vault-service
+              predicates:
+                - Path=/api/v1/vault/**
