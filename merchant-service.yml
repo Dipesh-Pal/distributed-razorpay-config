@@ -6,6 +6,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/razorpay-merchant-db
 
 app:
+  vault:
+    master-key: ${PAYMENT_MASTER_KEY}
   security:
     jwt:
       private-key: ${JWT_PRIVATE_KEY}
