@@ -4,8 +4,8 @@ server:
 app:
   security:
     public-routes:
-      - "api/v1/auth/signup"
-      - "api/v1/auth/login"
+      - "/api/v1/auth/signup"
+      - "/api/v1/auth/login"
     jwt:
       public-key: ${JWT_PUBLIC_KEY}
       issuer: "razorpay-clone"
