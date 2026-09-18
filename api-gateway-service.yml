@@ -29,7 +29,7 @@ spring:
               uri: lb://merchant-service
               predicates:
                 - Path=/api/v1/auth/**, /api/v1/merchants/**
-                
+
             - id: payment-service
               uri: lb://payment-service
               predicates:

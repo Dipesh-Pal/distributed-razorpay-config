@@ -12,7 +12,7 @@ spring:
         pool:
           max-active: 10
           max-idle: 5
-          min-idle: 1  
+          min-idle: 1
   kafka:
     bootstrap-servers: ${KAFKA_BROKERS:localhost:9092}
     listeners:
@@ -27,15 +27,15 @@ spring:
         retries: 3
         spring.json.add.type.headers: false
     consumer:
-        group-id: ${KAFKA_CONSUMER_GROUP_ID:razorpay-clone-group}
-        auto-offset-reset: earliest
-        enable-auto-commit: false
-        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-        value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-        properties:
-            spring.json.trusted.packages: "com.pal.dipesh.razorpay.*"
-            spring.json.use.type.headers: false
-            spring.json.value.default.type: java.util.LinkedHashMap
+      group-id: ${KAFKA_CONSUMER_GROUP_ID:razorpay-clone-group}
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.pal.dipesh.razorpay.*"
+        spring.json.use.type.headers: false
+        spring.json.value.default.type: java.util.LinkedHashMap
 eureka:
   client:
     service-url:
