@@ -18,6 +18,16 @@ spring:
         jdbc:
           time_zone: Asia/Kolkata
 
+resilience4j:
+  thread-pool-bulkhead:
+    instances:
+      vault-card-processor:
+        max-thread-pool-size: 10
+        core-thread-pool-size: 5
+        queue-capacity: 20
+        keep-alive-duration: 30s
+        register-health-indicator: true
+
 app:
   vault:
     master-key: ${PAYMENT_MASTER_KEY}
