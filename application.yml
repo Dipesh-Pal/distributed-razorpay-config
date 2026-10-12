@@ -52,7 +52,39 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health, info, metrics
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}    # labels every metric with service name
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+  tracing:
+    sampling:
+      probability: 1.0                           # trace every request in dev
+
+  # ── Metrics → Prometheus via OTLP ──────────────
+  otlp:
+    metrics:
+      export:
+        url: http://localhost:9090/api/v1/otlp/v1/metrics   # Prometheus OTLP HTTP receiver endpoint
+        step: 30s                           # push every 30 seconds
+
+  opentelemetry:
+    # ── Traces → Tempo via OTLP ──────────────────
+    tracing:
+      export:
+        otlp:
+          endpoint: http://localhost:4318/v1/traces
+
+    # ── Logs → Loki via OTLP ─────────────────────
+    logging:
+      export:
+        otlp:
+          endpoint: http://localhost:3100/otlp/v1/logs
 
 logging:
   level:
